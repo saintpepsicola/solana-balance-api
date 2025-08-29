@@ -64,13 +64,18 @@ var (
 	inflightRequestsMutex = &sync.Mutex{}
 )
 
+
+type SolanaRPC interface {
+	GetBalance(ctx context.Context, account solana.PublicKey, commitment rpc.CommitmentType) (*rpc.GetBalanceResult, error)
+}
+
 var (
 	// ipLimiters stores a rate limiter for each unique client IP.
 	ipLimiters      = make(map[string]*rate.Limiter)
 	ipLimitersMutex = &sync.Mutex{}
 
 	mongoClient     *mongo.Client
-	solanaRPCClient *rpc.Client
+	solanaRPCClient SolanaRPC
 )
 
 // --- HTTP Middleware ---
