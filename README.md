@@ -24,21 +24,7 @@
 docker-compose up -d
 ```
 
-#### Step 2: Insert a Valid API Key
-
-We will use `my-secret-api-key` as our example key. This is only a one-time setup.
-
-```bash
-# 1. Connect to the database shell inside the container
-docker exec -it solana-mongo mongosh
-
-# 2. Inside the mongosh shell, run these commands to insert the key
-use api_auth
-db.api_keys.insertOne({ "key": "my-secret-api-key" })
-exit
-```
-
-## **That's it! The API is now running and accessible at `http://localhost:8080`.**
+### **That's it! The API is now running and accessible at `http://localhost:8080`.**
 
 ### How to Test the API
 
