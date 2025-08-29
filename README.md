@@ -18,27 +18,15 @@
 
 ### How to Run the Application
 
-#### Step 1: Create a Docker Network
-
-This provides a private virtual network for our containers to communicate securely by name.
+#### Step 1: Start Everything with One Command
 
 ```bash
-docker network create solana-network
+docker-compose up -d
 ```
 
-#### Step 2: Start the MongoDB Database
+#### Step 2: Insert a Valid API Key
 
-```bash
-docker run -d \
-  --network solana-network \
-  --name solana-mongo \
-  -p 27017:27017 \
-  mongo
-```
-
-#### Step 3: Insert a Valid API Key
-
-We will use `my-secret-api-key` as our example key.
+We will use `my-secret-api-key` as our example key. This is only a one-time setup.
 
 ```bash
 # 1. Connect to the database shell inside the container
@@ -50,20 +38,7 @@ db.api_keys.insertOne({ "key": "my-secret-api-key" })
 exit
 ```
 
-#### Step 4: Run the API Container
-
-```bash
-docker run -d \
-  --network solana-network \
-  --name solana-api \
-  -p 8080:8080 \
-  -e MONGO_URI="mongodb://solana-mongo:27017" \
-  boltcola/solana-balance-api:latest
-```
-
-**The API is now running and accessible at `http://localhost:8080`.**
-
----
+## **That's it! The API is now running and accessible at `http://localhost:8080`.**
 
 ### How to Test the API
 
@@ -110,3 +85,7 @@ done
 _Expected Output:_ The first 5 requests will return a JSON error for an invalid address, and the next 5 will return `Too Many Requests`.
 
 ---
+
+**Force Refresh after updates.**
+
+`docker-compose pull api && docker-compose up -d --force-recreate api`
