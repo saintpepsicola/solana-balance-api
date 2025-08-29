@@ -23,4 +23,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: your-dockerhub-username/solana-balance-api:latest
+          tags: boltcola/solana-balance-api:latest
